@@ -9,7 +9,7 @@ desktop.ini
 *.swp
 *.swo
 
-# Logs and captures (review before committing)
+# Logs and packet captures: review and sanitize before adding intentionally
 *.log
 *.pcap
 *.pcapng
@@ -33,7 +33,8 @@ credentials/
 *.ova
 *.ovf
 
-# Archives / backups
+# Archives and temporary files
 *.bak
 *.old
 *.tmp
+*.zip
