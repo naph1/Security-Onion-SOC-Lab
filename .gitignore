@@ -1,40 +1,40 @@
-# Operating system
-.DS_Store
-Thumbs.db
-desktop.ini
-
-# Editors
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# Logs and packet captures: review and sanitize before adding intentionally
-*.log
-*.pcap
-*.pcapng
-
-# Secrets and local environment
-.env
-.env.*
-!.env.example
-*.pem
-*.key
-*.p12
-*.pfx
-secrets/
-credentials/
-
-# Virtual machines and disk images
+# Virtual machine files and snapshots
 *.vdi
 *.vmdk
 *.vhd
 *.vhdx
 *.ova
 *.ovf
+*.qcow2
+*.vmx
+*.vmsd
+*.vmsn
+*.sav
 
-# Archives and temporary files
-*.bak
-*.old
-*.tmp
-*.zip
+# Raw network captures and logs (add only sanitized, intentionally approved samples)
+*.pcap
+*.pcapng
+*.cap
+*.log
+*.evtx
+*.jsonl
+
+# Credentials and private material
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+secrets/
+credentials/
+
+# Local caches and generated files
+.DS_Store
+Thumbs.db
+__pycache__/
+*.py[cod]
+.vscode/
+.idea/

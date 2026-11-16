@@ -1,131 +1,104 @@
-# Security Onion SOC Lab: Network Monitoring and Threat Investigation
+# Security Onion SOC Lab
+### Network Security Monitoring, Detection Triage & SSH Brute-Force Investigation
 
-**Personal SOC home lab | Portfolio documentation**
+A virtualized SOC lab documenting controlled security testing, network monitoring, alert triage, and investigation workflows using Security Onion, Suricata, Zeek, Elastic/Kibana, Kali Linux, Ubuntu Server, and Windows.
 
-An isolated lab project documenting network monitoring, intrusion-detection review, alert triage, and investigation workflows using Security Onion, Suricata, Zeek, and Elastic/Kibana.
+**Portfolio case file:** https://naphtali-portfolio.netlify.app/security-onion-lab  
+**Repository:** https://github.com/naph1/Security-Onion-SOC-Lab
 
-> **Reconstruction and evidence note:** The original virtual-machine files, raw logs, packet captures, and configuration exports are no longer available. This repository reconstructs the project documentation from the author's published portfolio case file and CV. It does not claim to contain original runtime artifacts or to be independently reproducible from the files in this repository. The observations and metrics below are reported from the published portfolio material. Any future rebuilt lab, screenshots, logs, or demonstrations must be clearly labelled as a reproduction rather than original evidence.
+---
 
 ## Project overview
 
-The project used a dedicated virtual network to keep simulated testing traffic separate from the host environment. Kali Linux was used for controlled security testing, while Security Onion provided the monitoring and detection platform. The documented virtual-machine roles were Security Onion, Kali Linux, Ubuntu Server, and Windows. DVWA (Damn Vulnerable Web Application) was used as a vulnerable web-application target; the surviving project information does not establish whether it was hosted on a separate VM or on one of the existing target systems.
+This project documents a four-VM lab environment used to explore how controlled network activity can be observed and investigated from a defensive monitoring platform.
 
-The published portfolio case file reports:
+The documented roles were:
 
-- **951 total hits observed**
-- **2 detection engines**
-- **4 attack categories**
-- **4 virtual-machine roles**
-
-These are portfolio-reported observations, not fresh measurements reproduced from raw telemetry in this repository.
-
-## Objectives
-
-- Review network activity and security telemetry in an isolated lab.
-- Generate controlled reconnaissance, authentication brute-force, and web-application test traffic.
-- Review Suricata alerts and correlate relevant activity with Zeek connection metadata.
-- Use Elastic/Kibana dashboards and searches to examine event patterns and timelines.
-- Investigate repeated SSH authentication failures and document the assessment and recommended response.
-- Distinguish controlled test activity and benign background traffic from events requiring further investigation.
-
-## Environment and tools
-
-| Component | Documented role |
+| System | Lab role |
 |---|---|
-| Security Onion | Central network monitoring and security analysis platform |
-| Suricata | Network intrusion-detection alerts |
-| Zeek | Network connection and protocol metadata |
-| Elastic Stack / Kibana | Event search, analysis, and visualization |
-| Kali Linux | Controlled offensive testing / traffic generation |
-| Ubuntu Server | Monitored Linux host role |
-| Windows | Monitored endpoint role |
-| DVWA | Deliberately vulnerable web application used for web-security testing; hosting arrangement is unconfirmed |
+| Security Onion | Network security monitoring, alert review, hunting and investigation |
+| Kali Linux | Controlled testing and traffic generation |
+| Ubuntu Server | Monitored Linux server |
+| Windows | Monitored Windows endpoint |
 
-## Conceptual lab layout
+The documented testing included Nmap reconnaissance, controlled authentication/brute-force activity, and web-application testing involving DVWA. Security Onion's Suricata alerts were reviewed alongside Zeek connection metadata in Elastic/Kibana. A separate investigation write-up documents the analytical workflow used for an SSH brute-force alert.
 
-The diagram below describes the documented functional roles, not a recovered network diagram or a verified physical topology.
+> **Important provenance note:** This repository is a reconstructed documentation package based on the surviving project description, portfolio case file, and screenshots. The original virtual-machine files and raw runtime logs are unavailable. This repository therefore does **not** contain original VM images, original PCAPs, raw event records, or configuration exports. The documentation must not be treated as a forensic evidence archive or a reproducible copy of the original lab.
 
-```text
-                   Isolated virtual lab network
-                              |
-          +-------------------+-------------------+
-          |                   |                   |
-   +-------------+     +---------------+    +------------------+
-   | Kali Linux  | --> | Security      |    | Monitored targets|
-   | Test source |     | Onion         |    | Ubuntu Server    |
-   +-------------+     | - Suricata    |    | Windows          |
-                       | - Zeek         |    | DVWA web target* |
-                       | - Elastic/     |    +------------------+
-                       |   Kibana       |
-                       +---------------+
+## What this project demonstrates
 
-   *DVWA was documented as a target; its hosting arrangement is
-    not established by the surviving project records.
-```
+- Understanding of a small virtualized SOC monitoring environment.
+- Use of Suricata alerts as detection leads.
+- Use of Zeek connection metadata to add network context.
+- Review and correlation of monitoring information in Elastic/Kibana.
+- Triage-oriented analysis of SSH authentication brute-force activity.
+- Controlled security testing with Nmap, authentication testing, and DVWA-related web activity.
+- Clear documentation of evidence limitations and analytical confidence.
 
-## Documented testing and investigation areas
+## Monitoring and analysis workflow
 
-1. Network reconnaissance using Nmap.
-2. SSH authentication brute-force simulation.
-3. Web-application testing against DVWA.
-4. Review of Suricata alerts and related Zeek connection metadata.
-5. Investigation of repeated SSH authentication failures.
+1. Generate controlled test traffic from the testing system.
+2. Review the resulting network-security alerts and monitoring data in Security Onion.
+3. Examine Suricata alert information.
+4. Use Zeek connection metadata to add context to relevant network activity.
+5. Review and correlate available information in Elastic/Kibana.
+6. Document the investigation, observations, limitations, and recommended follow-up.
 
-See [`attack-scenarios/`](attack-scenarios/) for scenario summaries and [`investigations/`](investigations/) for the documented SSH case study.
+Suricata and Zeek serve complementary purposes: Suricata provides signature-based detection alerts, while Zeek provides structured network-activity metadata. Zeek should not be described as a second signature-based IDS engine.
 
-## Investigation workflow
+## Reported portfolio metrics
 
-1. Identify an alert or unusual activity pattern.
-2. Establish the relevant time window and affected systems.
-3. Review the detection details, including signature, source/destination information, port, and protocol where available.
-4. Correlate with Zeek connection metadata to add network context.
-5. Determine whether the activity matches a controlled lab test, benign activity, or an event requiring escalation.
-6. Record supporting observations, uncertainty, and recommended containment or follow-up actions.
+The portfolio case file reports the following figures:
 
-This is a summary of the workflow described in the portfolio and CV, not a claim that original logs are included here.
+- **951 search hits** displayed in a Security Onion Hunt view.
+- **Two network analysis components:** Suricata and Zeek.
+- **Four attack categories** reported in the portfolio case file.
 
-## Evidence and provenance
+These are portfolio-reported figures, not counts independently recalculated from original telemetry. The individual labels for all four attack categories are not fully preserved in the available project material. The 951 figure should be read as the count displayed by the historical search view, not as a count of unique malicious events or confirmed incidents.
 
-The portfolio case file contains supporting screenshots and project context:
-
-- [Security Onion lab case file](https://naphtali-portfolio.netlify.app/security-onion-lab)
-- [Hunt / alert evidence image](https://naphtali-portfolio.netlify.app/images/onion-hunt.png)
-- [Dashboard evidence image](https://naphtali-portfolio.netlify.app/images/onion-dashboards.png)
-- [Alert breakdown evidence image](https://naphtali-portfolio.netlify.app/images/onion-breakdown.png)
-
-The images are linked from the portfolio site; they are not repackaged as original raw telemetry in this repository. See [`evidence/README.md`](evidence/README.md) and [`sources/README.md`](sources/README.md).
-
-## Limitations
-
-- Original VM images, raw logs, PCAPs, and configuration exports are unavailable.
-- Exact IP addresses, timestamps, full alert records, and complete packet-level evidence cannot be reconstructed reliably from the surviving summary material.
-- The precise DVWA hosting arrangement is unconfirmed.
-- The architecture diagram is conceptual and should not be interpreted as a recovered network topology.
-- This repository is documentation of a completed personal lab, not a deployable lab bundle or a production SOC implementation.
-
-## Suggested future improvements
-
-If the lab is rebuilt, add clearly labelled reproduction evidence such as sanitized alert exports, sample PCAPs, Zeek logs, screenshots, a network diagram with verified addressing, and step-by-step setup notes. Do not present newly generated artifacts as evidence from the original lab.
-
-## Repository structure
+## Repository map
 
 ```text
-security-onion-soc-lab/
+Security-Onion-SOC-Lab/
 ├── README.md
+├── .gitignore
+├── .gitattributes
 ├── docs/
-│   ├── lab-architecture.md
-│   ├── environment-setup.md
-│   ├── detection-workflow.md
-│   └── investigation-methodology.md
+│   ├── lab-overview.md
+│   ├── architecture-and-data-flow.md
+│   └── testing-methodology.md
 ├── investigations/
 │   └── ssh-brute-force-investigation.md
 ├── attack-scenarios/
-│   ├── reconnaissance.md
-│   ├── brute-force.md
-│   └── web-attacks.md
+│   ├── nmap-reconnaissance.md
+│   ├── authentication-brute-force.md
+│   └── dvwa-web-testing.md
 ├── evidence/
 │   └── README.md
-├── sources/
-│   └── README.md
-└── .gitignore
+└── sources/
+    └── README.md
 ```
+
+## Evidence and reproducibility
+
+The `evidence/README.md` file indexes the surviving portfolio screenshots and explains what they can and cannot establish. The screenshots are linked to the portfolio rather than copied into this archive because the original project artifacts were not available in the working materials used to prepare this package.
+
+Do not infer missing IP addresses, hostnames, usernames, exact timestamps, commands, rule identifiers, event IDs, packet contents, or final attack outcomes. Where those details are not preserved, the reports explicitly say so.
+
+## Safety and scope
+
+The scenarios describe controlled testing in an isolated lab. They are documentation of previously performed learning activities, not instructions to target systems without authorization. Do not run scanning or authentication-testing commands against systems you do not own or have explicit permission to assess.
+
+## Limitations
+
+- Original VM images and snapshots are unavailable.
+- Original PCAPs and raw event records are unavailable.
+- Original Security Onion, Suricata, Zeek, Elastic, and Kibana configuration exports are unavailable.
+- Exact network addressing, complete timestamps, individual alert identifiers, and all test parameters were not preserved in the available source material.
+- The documentation is not a claim that the historical lab can be recreated exactly from this repository.
+
+## Author
+
+**Naphtali Peter**  
+Cybersecurity | SOC Monitoring | Network Security
+
